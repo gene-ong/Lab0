@@ -41,6 +41,11 @@ typedef uint16_t PackedTime_t;
 // You will need to create a FIFO object with a size suitable to store 10 time-stamps using the packed time representation.
 // ***
 
+//Global Variable Declarations
+uint8_t Seconds = 0;
+uint8_t Minutes = 0;
+uint8_t Hours = 0;
+
 static void OneSecondElapsed(void)
 {
   LEDs_Toggle(LED_BLUE);
