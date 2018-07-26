@@ -49,7 +49,24 @@ uint8_t Hours = 0;
 static void OneSecondElapsed(void)
 {
   LEDs_Toggle(LED_BLUE);
+
   // One second has elapsed - update the time here
+  Seconds++;
+  if(Seconds>59)
+    {
+      Minutes++;
+      Seconds = 0;
+    }
+  if(Minutes>59)
+      {
+        Hours++;
+        Minutes = 0;
+      }
+  if(Hours>12)
+      {
+        Hours = 0;
+      }
+
 }
 
 static void Button1Pressed(void)
