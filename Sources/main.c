@@ -37,6 +37,11 @@
 
 typedef uint16_t PackedTime_t;
 
+// The Array required to store the 10 time-stamps
+PackedTime_t Buffer[10];
+// The counter to control where in the array the values should be stored
+int Counter = 0;
+
 // ***
 // You will need to create a FIFO object with a size suitable to store 10 time-stamps using the packed time representation.
 // ***
@@ -45,6 +50,14 @@ typedef uint16_t PackedTime_t;
 uint8_t Seconds = 0;
 uint8_t Minutes = 0;
 uint8_t Hours = 0;
+
+void FIFO_input(uint16_t time)
+{
+  Buffer[Counter] = time;
+  Counter++;
+  if (Counter>9)
+    Counter = 0;
+}
 
 static void OneSecondElapsed(void)
 {
@@ -73,6 +86,9 @@ static void Button1Pressed(void)
 {
   LEDs_Toggle(LED_ORANGE);
   // The button has been pressed - put a time-stamp into the FIFO
+  PackedTime_t TimeStamp = 0;
+  TimeStamp = (Hours<<12)|(Minutes<<6)|Seconds;
+  FIFO_input(TimeStamp);
 }
 
 static void TowerInit(void)
